@@ -1,3 +1,8 @@
+# Exercise 1
+# Author: Andrea Frank <aefrank17@gmail.com>
+# Date: 02 August, 2021 
+# SDU Summer School 2021, Odense Denmark
+
 import math
 import numpy as np
 
@@ -5,7 +10,7 @@ import numpy as np
 #   Helper functions
 #################################################################
 
-def random_unit_vector_spher(dims=6):
+def random_unit_vector_spheric(dims=6):
     """
     Generates a random unit vector in (hyper)spherical coordinates.
 
@@ -13,12 +18,12 @@ def random_unit_vector_spher(dims=6):
     angular coordinates with the "phi" coords (those that range from
     0 to pi) first followed by the "theta" coord (ranging 0-2pi)
     """
-    spher = np.ones(dims)
-    spher[1:-1] =   math.pi*np.random.random(dims-2)  
-    spher[-1]   = 2*math.pi*np.random.random()
-    return spher
+    spheric = np.ones(dims)
+    spheric[1:-1] =   math.pi*np.random.random(dims-2)  
+    spheric[-1]   = 2*math.pi*np.random.random()
+    return spheric
 
-def spher_to_cart(spher):
+def spheric_to_cart(spheric):
     """
     Converts (hyper)spherical coordinates to Cartesian coordinates.
 
@@ -36,19 +41,19 @@ def spher_to_cart(spher):
         ...
         xn = r * sin(phi0) * ... * sin(phi_n-1) * sin(theta)
     """
-    dims = len(spher)
-    r = spher[0]    # radial coord
+    dims = len(spheric)
+    r = spheric[0]    # radial coord
     cart = np.ones(dims)
     for c in range(dims-1):
-        cart[c] *= r*np.prod(np.sin(spher[1:c+1]))*math.cos(spher[c+1])
-    cart[-1] *= r*np.prod(np.sin(spher[1:]))
+        cart[c] *= r*np.prod(np.sin(spheric[1:c+1]))*math.cos(spheric[c+1])
+    cart[-1] *= r*np.prod(np.sin(spheric[1:]))
     return cart
 
 def random_unit_vector_cart(dims=6):
     """
     Generates a random unit vector in Cartesian space.
     """
-    return spher_to_cart(random_unit_vector_spher(dims=dims))
+    return spheric_to_cart(random_unit_vector_spheric(dims=dims))
 
 
 def eucl_dist_from_configs(config1, config2=None):
